@@ -29,6 +29,8 @@ public class ExitGame {
 		String input = ""; 
 		
 		
+	
+		
 		while(true) {
 			int itemCnt = 5;
 			
@@ -36,7 +38,7 @@ public class ExitGame {
 			input=playerInput();
 			
 			if(input.equals("도움말")) {
-				
+				help();
 			}else if(input.equals("게임시작")) {
 				
 				character(); //캐릭터 선택
@@ -522,6 +524,19 @@ public class ExitGame {
 			for(int i=0;i<10;i++) {
 				System.out.println(rankingName[i]+" "+rankingPoint[i]);
 			}
+		}
+		
+		public static void help() {
+			System.out.println("[Help]");
+			System.out.println("-------------------------------------------------------------------------");
+			System.out.println("|	이동은 상(w), 하(s), 좌(a), 우(d) 로 합니다	.			|");
+			System.out.println("|	아이템 사용은 e를 입력하여 사용하고					|");
+			System.out.println("|	벽에 아이템을 사용하면 벽이 부서집니다!					|");
+			System.out.println("|	통로에 아이템을 사용한다면 플레이어가 2칸 이동합니다.				|");
+			System.out.println("|	난이도는 쉬움과 어려움이 있고 각각 제한시간이 있습니다.				|");
+			System.out.println("|	미로에 등장하는 숫자를 획득하면 숫자만큼 점수가 올라갑니다.			|");
+			System.out.println("|	아이템을 적절히 사용해 최대한 많은 점수를 획득하고 제한시간내에 미로를 탈출하세요!	|");
+			System.out.println("-------------------------------------------------------------------------");
 		}
 
 }
