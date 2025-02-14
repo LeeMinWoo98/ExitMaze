@@ -13,8 +13,12 @@ public class ExitGame {
 	static final String red      = "\u001B[31m" ;	//색 부여를 위해 변수 추가
 	static final String blue     = "\u001B[34m" ;
 	static final String exit     = "\u001B[0m" ;
+	static final String gray    = "\u001B[37m" ;
+	static final String purple    = "\u001B[35m" ;
+	static final String black    = "\u001B[40m" ;
+	static final String bold    = "\u001B[1m" ;
 	static String diff = "";
-	static int[] rankingPoint={50,40,30,20,10,8,6,4,2,1};
+	static int[] rankingPoint=new int [10];
 	static String[] rankingName=new String[10];
 	
 	public static void main(String[] args) {
@@ -29,17 +33,17 @@ public class ExitGame {
 		String input = ""; 
 		
 		
-	
-		
 		while(true) {
 			int itemCnt = 5;
 			
 			System.out.println("1.도움말   2.게임시작   3.랭킹   4.종료");
 			input=playerInput();
 			
-			if(input.equals("도움말")) {
+			if(input.equals("1")) {
 				help();
-			}else if(input.equals("게임시작")) {
+				System.out.println("그만 보시려면 enter키를 누르십시오");
+				in.nextLine();
+			}else if(input.equals("2")) {
 				
 				character(); //캐릭터 선택
 				
@@ -66,10 +70,10 @@ public class ExitGame {
 						len_y = 25;
 						len_x = 54;
 						diff = "어려움";
-						timeLimit = 100;
-						remainTime = 100;
+						timeLimit = 125;
+						remainTime = 125;
 					}else {
-						System.out.println("1이나 2만 입력해 주세요.");
+						System.out.println("'쉬움'이나 '어려움'만 입력해 주세요.");
 					}
 				}
 				
@@ -81,8 +85,14 @@ public class ExitGame {
 				E_x = E_x(); 
 				E_y = E_y();
 				
+				System.out.println("영문으로 바꿔서 입력해주세요");
+				
 				gemPoint = 0; // 점수 초기화
-				System.out.println("난이도: "+diff+"			남은시간(초) : "+remainTime+"			점수 : "+gemPoint);
+				if(diff.equals("쉬움"))
+					System.out.println(black+gray+bold+" 난이도: "+diff+"			"+"남은시간(초) : "+remainTime+"	              "+"                      점수 : "+gemPoint+"        "+exit);
+				else
+					System.out.println(black+gray+bold+" 난이도: "+diff+"		  	                "+"남은시간(초) : "+remainTime+"  	                                       "
+				+"              점수 : "+gemPoint+"                     "+exit);
 				mazePrint(len_y);
 				beforeTime = System.currentTimeMillis();
 				
@@ -165,7 +175,12 @@ public class ExitGame {
 								"                      ");
 						break;
 					}
-					System.out.println("난이도: "+diff+"			남은시간(초) : "+remainTime+"			점수 : "+gemPoint);
+					if(diff.equals("쉬움"))
+						System.out.println(black+gray+bold+" 난이도: "+diff+"			"+"남은시간(초) : "+remainTime+"	              "+"                      점수 : "+gemPoint+"        "+exit);
+					else
+						System.out.println(black+gray+bold+" 난이도: "+diff+"		  	                "+"남은시간(초) : "+remainTime+"  	                                       "
+					+"              점수 : "+gemPoint+"                     "+exit);
+				
 					mazePrint(len_y);
 				}
 				
@@ -178,10 +193,10 @@ public class ExitGame {
 				gemPoint = 0;
 				diff = "";
 				
-			}else if(input.equals("종료")) {
+			}else if(input.equals("4")) {
 				System.out.println("게임을 종료합니다");
 				break;
-			}else if(input.equals("랭킹")) {
+			}else if(input.equals("3")) {
 				rankview();
 			}else {
 				System.out.println("메뉴만 입력해주세요.");
@@ -204,7 +219,7 @@ public class ExitGame {
 				if(maze[i][j] == '*')
 					break;
 				if(maze[i][j] == character)
-					System.out.print(red+maze[i][j]+exit+" ");
+					System.out.print(purple+maze[i][j]+exit+" ");
 				else if(maze[i][j] == '_')
 					System.out.print(blue+maze[i][j]+exit+" ");
 				else
@@ -525,18 +540,17 @@ public class ExitGame {
 				System.out.println(rankingName[i]+" "+rankingPoint[i]);
 			}
 		}
-		
 		public static void help() {
-			System.out.println("[Help]");
-			System.out.println("-------------------------------------------------------------------------");
-			System.out.println("|	이동은 상(w), 하(s), 좌(a), 우(d) 로 합니다	.			|");
-			System.out.println("|	아이템 사용은 e를 입력하여 사용하고					|");
-			System.out.println("|	벽에 아이템을 사용하면 벽이 부서집니다!					|");
-			System.out.println("|	통로에 아이템을 사용한다면 플레이어가 2칸 이동합니다.				|");
-			System.out.println("|	난이도는 쉬움과 어려움이 있고 각각 제한시간이 있습니다.				|");
-			System.out.println("|	미로에 등장하는 숫자를 획득하면 숫자만큼 점수가 올라갑니다.			|");
-			System.out.println("|	아이템을 적절히 사용해 최대한 많은 점수를 획득하고 제한시간내에 미로를 탈출하세요!	|");
-			System.out.println("-------------------------------------------------------------------------");
+			System.out.println(purple+"[Help]"+exit);
+			System.out.println(purple+"-------------------------------------------------------------------------"+exit);
+			System.out.println(purple+"|	이동은 상(w), 하(s), 좌(a), 우(d) 로 합니다.			        |"+exit);
+			System.out.println(purple+"|	아이템 사용은 e를 입력하고 이동키로 방향을 설정해서 사용합니다.	                |"+exit);
+			System.out.println(purple+"|	벽에 아이템을 사용하면 벽이 부서집니다!				        |"+exit);
+			System.out.println(purple+"|	통로에 아이템을 사용한다면 플레이어가 2칸 이동합니다.		       	        |"+exit);
+			System.out.println(purple+"|	난이도는 쉬움과 어려움이 있고 각각 제한 시간이 있습니다.			        |"+exit);
+			System.out.println(purple+"|	미로에 등장하는 숫자를 획득하면 숫자만큼 점수가 올라갑니다.			        |"+exit);
+			System.out.println(purple+"|	아이템을 적절히 사용해 최대한 많은 점수를 획득하고 제한 시간 내에 미로를 탈출하세요!	        |"+exit);
+			System.out.println(purple+"-------------------------------------------------------------------------"+exit);
 		}
 
 }
