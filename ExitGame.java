@@ -1,5 +1,7 @@
 package ExitGame;
 //6조 팀 프로젝트
+//미로탈출하기 게임
+//아이템도 있어용
 import java.util.Random;
 import java.util.Scanner;
 
