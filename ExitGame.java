@@ -459,9 +459,7 @@ public class ExitGame {
 			
 		}
 		
-		public static void rank() {
-			
-		}
+		
 		
 
 }
