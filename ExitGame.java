@@ -1,7 +1,5 @@
 package ExitGame;
-//6조 팀 프로젝트
-//미로탈출하기 게임
-//아이템도 있어용
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -16,148 +14,177 @@ public class ExitGame {
 	static final String blue     = "\u001B[34m" ;
 	static final String exit     = "\u001B[0m" ;
 	static String diff = "";
+	static int[] rankingPoint={50,40,30,20,10,8,6,4,2,1};
+	static String[] rankingName=new String[10];
 	
 	public static void main(String[] args) {
-		String input = ""; 
 		int len_x = 0;
 		int len_y = 0;
 		int E_x = 0; //출구 x 좌표
 		int E_y = 0; //출구 y 좌표
-		int itemCnt = 5;
 		long timeLimit = 0;
 		long beforeTime = 0;
 		long afterTime = 0;
 		long remainTime = 0;
-
-		character(); //캐릭터 선택
+		String input = ""; 
 		
-		for(int i = 0; i < 25; i++) {
-			for(int j = 0; j < 54; j++) {
-				maze[i][j] = '*'; //빈 공간을 의미 -> 사이즈가 작은 미로 맵에서 그 미로멥의 크기만큼만 출력하기 위해서 
-			}
-		}
-		
-		while(diff.equals("")) {
-			System.out.println("난이도를 고르세요 '쉬움' or '어려움'");
-			input = playerInput();
-			
-			if(input.equals("쉬움")) {
-				maze1();
-				len_y = 20;
-				len_x = 40;
-				diff = "쉬움";
-				timeLimit = 50;
-				remainTime = 50;
-			}
-			else if(input.equals("어려움")){
-				maze2();
-				len_y = 25;
-				len_x = 54;
-				diff = "어려움";
-				timeLimit = 100;
-				remainTime = 100;
-			}else {
-				System.out.println("1이나 2만 입력해 주세요.");
-			}
-		}
-		
-		createGem(len_x, len_y);
-		
-		//플레이어의 위치
-		maze[y][x] = character;
-		
-		E_x = E_x(); 
-		E_y = E_y();
-		
-		gemPoint = 0; // 점수 초기화
-		System.out.println("난이도: "+diff+"			남은시간(초) : "+remainTime+"			점수 : "+gemPoint);
-		mazePrint(len_y);
-		beforeTime = System.currentTimeMillis();
 		
 		while(true) {
-			input = playerInput();
+			int itemCnt = 5;
 			
-			//플레이어의 입력이 w 일 때
-			if(input.equals("w"))
-				up();
-			//플레이어의 입력이 s 일 때
-			else if(input.equals("s"))
-				down();
-			//플레이어의 입력이 a 일 때
-			else if(input.equals("a"))
-				left();
-			//플레이어의 입력이 d 일 때
-			else if(input.equals("d"))
-				right();			
-			//입력이 give up 일 때 게임 종료
-			else if(input.equals("give up"))
-				break;
-			else if(input.equals("e")) {
-				if(item(len_x,len_y)==0) 
-					System.out.println("아이템을 사용할수 없습니다.");
-				else {
-					itemCnt--;
+			System.out.println("1.도움말   2.게임시작   3.랭킹   4.종료");
+			input=playerInput();
+			
+			if(input.equals("도움말")) {
+				
+			}else if(input.equals("게임시작")) {
+				
+				character(); //캐릭터 선택
+				
+				for(int i = 0; i < 25; i++) {
+					for(int j = 0; j < 54; j++) {
+						maze[i][j] = '*'; //빈 공간을 의미 -> 사이즈가 작은 미로 맵에서 그 미로멥의 크기만큼만 출력하기 위해서 
+					}
 				}
-			}
-			for(int i = 0; i < len_y; i++) {
-				System.out.println();
-			}
-			
-			afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
-			remainTime = timeLimit-(afterTime - beforeTime)/1000; //두 시간에 차 계산
-			
-			if(remainTime<0)
-				remainTime=0;
-			
-			
-			if((x == E_x && y == E_y) || (x == E_x+1 && y == E_y) || (x == E_x+2 && y == E_y)) {
-				System.out.println("     #####       ##   ##   ##   ######  \r\n" + 
-						"    #######    #####  ### ###  #######  \r\n" + 
-						"    ##         ## ##  #######  ##       \r\n" + 
-						"    ##  ###   ##  ##  #######  #######  \r\n" + 
-						"    ##   ##   ######  ## # ##  ##       \r\n" + 
-						"    #######  ##   ##  ##   ##  #######  \r\n" + 
-						"     #####   ##   ##  ##   ##   ######  \r\n\n" + 
-						" #####   ##        ######      ##   ######   \r\n" + 
-						"#######  ##       #######    #####  #######  \r\n" + 
-						"##   ##  ##       ##         ## ##       ##  \r\n" + 
-						"##       ##       #######   ##  ##  ######   \r\n" + 
-						"##   ##  ##       ##        ######  ##   ##  \r\n" + 
-						"#######  #######  #######  ##   ##  ##   ##  \r\n" + 
-						" #####    ######   ######  ##   ##  ##   ##  \r\n" + 
-						"                                                                              " + 
-						"                                                                                          ");
-				gemPoint+=remainTime;
-				System.out.println("총점수: "+gemPoint+",			남은시간: "+remainTime+"초");
+				
+				while(diff.equals("")) {
+					System.out.println("난이도를 고르세요 '쉬움' or '어려움'");
+					input = playerInput();
+					
+					if(input.equals("쉬움")) {
+						maze1();
+						len_y = 20;
+						len_x = 40;
+						diff = "쉬움";
+						timeLimit = 50;
+						remainTime = 50;
+					}
+					else if(input.equals("어려움")){
+						maze2();
+						len_y = 25;
+						len_x = 54;
+						diff = "어려움";
+						timeLimit = 100;
+						remainTime = 100;
+					}else {
+						System.out.println("1이나 2만 입력해 주세요.");
+					}
+				}
+				
+				createGem(len_x, len_y);
+				
+				//플레이어의 위치
+				maze[y][x] = character;
+				
+				E_x = E_x(); 
+				E_y = E_y();
+				
+				gemPoint = 0; // 점수 초기화
+				System.out.println("난이도: "+diff+"			남은시간(초) : "+remainTime+"			점수 : "+gemPoint);
+				mazePrint(len_y);
+				beforeTime = System.currentTimeMillis();
+				
+				while(true) {
+					input = playerInput();
+					
+					//플레이어의 입력이 w 일 때
+					if(input.equals("w"))
+						up();
+					//플레이어의 입력이 s 일 때
+					else if(input.equals("s"))
+						down();
+					//플레이어의 입력이 a 일 때
+					else if(input.equals("a"))
+						left();
+					//플레이어의 입력이 d 일 때
+					else if(input.equals("d"))
+						right();			
+					//입력이 give up 일 때 게임 종료
+					else if(input.equals("give up"))
+						break;
+					else if(input.equals("e")) {
+						if(item(len_x,len_y)==0) 
+							System.out.println("아이템을 사용할수 없습니다.");
+						else {
+							itemCnt--;
+						}
+					}
+					for(int i = 0; i < len_y; i++) {
+						System.out.println();
+					}
+					
+					afterTime = System.currentTimeMillis(); // 코드 실행 후에 시간 받아오기
+					remainTime = timeLimit-(afterTime - beforeTime)/1000; //두 시간에 차 계산
+					
+					if(remainTime<0)
+						remainTime=0;
+					
+					
+					if((x == E_x && y == E_y) || (x == E_x+1 && y == E_y) || (x == E_x+2 && y == E_y)) {
+						System.out.println("     #####       ##   ##   ##   ######  \r\n" + 
+								"    #######    #####  ### ###  #######  \r\n" + 
+								"    ##         ## ##  #######  ##       \r\n" + 
+								"    ##  ###   ##  ##  #######  #######  \r\n" + 
+								"    ##   ##   ######  ## # ##  ##       \r\n" + 
+								"    #######  ##   ##  ##   ##  #######  \r\n" + 
+								"     #####   ##   ##  ##   ##   ######  \r\n\n" + 
+								" #####   ##        ######      ##   ######   \r\n" + 
+								"#######  ##       #######    #####  #######  \r\n" + 
+								"##   ##  ##       ##         ## ##       ##  \r\n" + 
+								"##       ##       #######   ##  ##  ######   \r\n" + 
+								"##   ##  ##       ##        ######  ##   ##  \r\n" + 
+								"#######  #######  #######  ##   ##  ##   ##  \r\n" + 
+								" #####    ######   ######  ##   ##  ##   ##  \r\n" + 
+								"                                                                              " + 
+								"                                                                                          ");
+						gemPoint+=remainTime;
+						System.out.println("총점수: "+gemPoint+",			남은시간: "+remainTime+"초");
+						rank(gemPoint);
+						break;
+					}
+					
+					if(remainTime == 0) {
+						System.out.println("     #####       ##   ##   ##   ######  \r\n" + 
+								"    #######    #####  ### ###  #######  \r\n" + 
+								"    ##         ## ##  #######  ##       \r\n" + 
+								"    ##  ###   ##  ##  #######  #######  \r\n" + 
+								"    ##   ##   ######  ## # ##  ##       \r\n" + 
+								"    #######  ##   ##  ##   ##  #######  \r\n" + 
+								"     #####   ##   ##  ##   ##   ######  \r\n\n" + 
+								"     #####   ##   ##   ######  ######   \r\n" + 
+								"    #######  ##   ##  #######  #######  \r\n" + 
+								"    ##   ##  ##   ##  ##            ##  \r\n" + 
+								"    ##   ##  ##   ##  #######  ######   \r\n" + 
+								"    ##   ##  ### ###  ##       ##   ##  \r\n" + 
+								"    #######   #####   #######  ##   ##  \r\n" + 
+								"     #####     ###     ######  ##   ##  \r\n" + 
+								"                                     \r\n" + 
+								"                    " + 
+								"                      ");
+						break;
+					}
+					System.out.println("난이도: "+diff+"			남은시간(초) : "+remainTime+"			점수 : "+gemPoint);
+					mazePrint(len_y);
+				}
+				
+				
+				
+				
+				x= 1;
+				y= 0; 
+				character = ' ';
+				gemPoint = 0;
+				diff = "";
+				
+			}else if(input.equals("종료")) {
+				System.out.println("게임을 종료합니다");
 				break;
+			}else if(input.equals("랭킹")) {
+				rankview();
+			}else {
+				System.out.println("메뉴만 입력해주세요.");
 			}
-			
-			if(remainTime == 0) {
-				System.out.println("     #####       ##   ##   ##   ######  \r\n" + 
-						"    #######    #####  ### ###  #######  \r\n" + 
-						"    ##         ## ##  #######  ##       \r\n" + 
-						"    ##  ###   ##  ##  #######  #######  \r\n" + 
-						"    ##   ##   ######  ## # ##  ##       \r\n" + 
-						"    #######  ##   ##  ##   ##  #######  \r\n" + 
-						"     #####   ##   ##  ##   ##   ######  \r\n\n" + 
-						"     #####   ##   ##   ######  ######   \r\n" + 
-						"    #######  ##   ##  #######  #######  \r\n" + 
-						"    ##   ##  ##   ##  ##            ##  \r\n" + 
-						"    ##   ##  ##   ##  #######  ######   \r\n" + 
-						"    ##   ##  ### ###  ##       ##   ##  \r\n" + 
-						"    #######   #####   #######  ##   ##  \r\n" + 
-						"     #####     ###     ######  ##   ##  \r\n" + 
-						"                                     \r\n" + 
-						"                    " + 
-						"                      ");
-				break;
-			}
-			System.out.println("난이도: "+diff+"			남은시간(초) : "+remainTime+"			점수 : "+gemPoint);
-			mazePrint(len_y);
 		}
-		
-		
-		
 	}
 	
 	//플레이어 입력 받아오기
@@ -337,31 +364,31 @@ public class ExitGame {
 		}
 		
 		public static void character() {
-			int input = 0;
+			String input =new String();
 			
 			System.out.println("다음 중 캐릭터를 고르세요 (번호만 입력)");
 			
 			while(true) {
 				System.out.println("1번 : '@' | 2번 : 'P' | 3번 : '#' | 4번 : '$' | 5번 : '&'");
-				input = Integer.parseInt(in.nextLine());
+				input = in.nextLine();
 				
-				if(input == 1) {
+				if(input.equals("1")) {
 					System.out.println("@로 선택되었습니다");
 					character ='@';
 					break;
-				}else if(input == 2) {
+				}else if(input.equals("2")) {
 					System.out.println("P로 선택되었습니다");
 					character ='P';
 					break;
-				}else if(input == 3) {
+				}else if(input.equals("3")) {
 					System.out.println("#로 선택되었습니다");
 					character ='#';
 					break;
-				}else if(input == 4) {
+				}else if(input.equals("4")) {
 					System.out.println("$로 선택되었습니다");
 					character ='$';
 					break;
-				}else if(input == 5) {
+				}else if(input.equals("5")) {
 					System.out.println("&로 선택되었습니다");
 					character ='&';
 					break;
@@ -459,8 +486,43 @@ public class ExitGame {
 			
 		}
 		
+		public static void rank(int point) {
+			System.out.println("랭킹에 등록하시겠습니까? y/n");
+			String ans=playerInput();
+			int ck=0;
+			if(ans.equals("y")) {
+				for(int i=0;i<10;i++) {
+					if(rankingPoint[i]<point) {
+						System.out.println("닉네임 입력");
+						String name=playerInput();
+						for(int j=8;j>=i;j--) {
+							rankingPoint[j+1]=rankingPoint[j];
+							rankingName[j+1]=rankingName[j];
+						}
+						rankingPoint[i]=point;
+						rankingName[i]=name;
+						System.out.println("등록되었습니다.");
+						ck=1;
+						break;
+					}
+				}
+				if(ck==0) {
+					System.out.println("등록실패 점수가 낮습니다.");
+				}
+			}else if(ans.equals("n")){
+				
+			}else {
+				System.out.println("다시입력해주세요");
+				rank(point);
+			}
+			
+		}
 		
-		
+		public static void rankview() {
+			for(int i=0;i<10;i++) {
+				System.out.println(rankingName[i]+" "+rankingPoint[i]);
+			}
+		}
 
 }
 
